@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111110" />
+    <title>Placar de Vidas</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <a
+          class="brand"
+          href="index.html"
+          aria-label="Placar de Vidas, página inicial"
+          ><span class="brand-icon" aria-hidden="true">♥</span> Placar de
+          Vidas<span class="brand-dot">.</span></a
+        >
+      </header>
+
+      <main>
+        <section id="setup-screen" aria-labelledby="setup-title">
+          <div class="intro">
+            <span class="eyebrow"
+              ><span aria-hidden="true">◆</span> REÚNA A TURMA. ABRA A
+              MESA.</span
+            >
+            <h1 id="setup-title" tabindex="-1">
+              Cada vida<br />conta<span class="title-dot">.</span>
+            </h1>
+            <p>A resenha é de vocês. O placar é com a gente.</p>
+          </div>
+          <div class="setup-layout">
+            <form id="setup-form" class="panel" novalidate>
+              <div class="section-heading">
+                <span class="step" aria-hidden="true">♣</span>
+                <div>
+                  <span class="section-kicker">ANTES DA PRIMEIRA RODADA</span>
+                  <h2>Prepare a partida</h2>
+                </div>
+                <span class="section-index" aria-hidden="true">01 /</span>
+              </div>
+              <div class="settings-grid">
+                <div class="field">
+                  <label for="player-count">Número de jogadores</label
+                  ><input
+                    id="player-count"
+                    name="players"
+                    type="number"
+                    inputmode="numeric"
+                    min="2"
+                    max="15"
+                    step="1"
+                    value="2"
+                    required
+                    aria-describedby="player-count-hint form-error"
+                  /><small id="player-count-hint">De 2 a 15 pessoas</small>
+                </div>
+                <div class="field">
+                  <label for="initial-lives">Vidas por jogador</label
+                  ><input
+                    id="initial-lives"
+                    name="lives"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value="3"
+                    required
+                    aria-describedby="initial-lives-hint form-error"
+                  /><small id="initial-lives-hint"
+                    >De 1 a 30 vidas para começar</small
+                  >
+                </div>
+              </div>
+              <div class="names-heading">
+                <h3>Quem vai jogar?</h3>
+                <span>Nomes opcionais</span>
+              </div>
+              <div id="player-names" class="names-grid"></div>
+              <p id="form-error" class="error" role="alert" hidden></p>
+              <button type="submit" class="button primary start-button">
+                Abrir a mesa <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+            <aside class="setup-aside">
+              <div class="table-caption">
+                <span>BARALHO NA MESA</span><span aria-hidden="true">✳</span
+                ><span>RESENHA EM DIA</span>
+              </div>
+              <div class="illustration" aria-hidden="true">
+                <div class="table-ring"></div>
+                <div class="mini-card back-card">
+                  <span class="card-corner">A<small>♣</small></span
+                  ><b>♣</b
+                  ><span class="card-corner bottom-corner"
+                    >A<small>♣</small></span
+                  >
+                </div>
+                <div class="mini-card front-card">
+                  <span class="card-corner">3<small>♥</small></span>
+                  <div class="card-hearts">♥<br />♥<br />♥</div>
+                  <span class="card-corner bottom-corner"
+                    >3<small>♥</small></span
+                  >
+                </div>
+                <span class="table-stamp"
+                  >SÓ ACABA<br /><b>NA ÚLTIMA</b><br />VIDA.</span
+                >
+              </div>
+              <h2>A sorte vira.<br /><em>A resenha fica.</em></h2>
+              <p>
+                Um toque a menos. Uma chance a mais.<br />Deixe a próxima rodada
+                surpreender.
+              </p>
+              <div class="aside-footer">
+                <span aria-hidden="true">♥</span> FEITO PARA JOGAR JUNTO
+                <span aria-hidden="true">♥</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="score-screen" aria-labelledby="score-title" hidden>
+          <div class="score-heading">
+            <div class="intro">
+              <span class="eyebrow">◆ TODO MUNDO DE OLHO</span>
+              <h1 id="score-title" tabindex="-1">
+                Mesa aberta<span class="title-dot">.</span>
+              </h1>
+            </div>
+            <span class="live-badge"
+              ><span aria-hidden="true"></span> Em jogo</span
+            >
+          </div>
+          <dl id="match-summary" class="match-summary" aria-label="Resumo da partida">
+            <div class="match-stat">
+              <dt>Na mesa</dt>
+              <dd><span id="summary-players">0</span><span class="stat-unit">jogadores</span></dd>
+            </div>
+            <div class="match-stat stat-active">
+              <dt><span class="status-dot" aria-hidden="true"></span>No jogo</dt>
+              <dd><span id="summary-active">0</span><span class="stat-unit">ativos</span></dd>
+            </div>
+            <div class="match-stat">
+              <dt>Por jogador</dt>
+              <dd><span id="summary-lives">0</span><span class="stat-unit" id="summary-lives-label">vidas iniciais</span></dd>
+            </div>
+          </dl>
+          <div class="score-toolbar">
+            <div class="match-actions">
+              <button id="reset-game" class="button secondary" type="button">
+                Reiniciar partida</button
+              ><button id="new-game" class="button secondary" type="button">
+                Nova partida <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+          <div class="score-guide" aria-label="Como ajustar as vidas de cada jogador">
+            <span class="guide-label">A cada rodada</span>
+            <span class="guide-action"><span class="guide-symbol guide-minus" aria-hidden="true">−</span><span class="sr-only">Menos:</span> tira vida</span>
+            <span class="guide-action"><span class="guide-symbol guide-plus" aria-hidden="true">+</span><span class="sr-only">Mais:</span> devolve vida</span>
+          </div>
+          <div id="scoreboard" class="scoreboard"></div>
+          <p
+            id="announcer"
+            class="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
+        </section>
+      </main>
+      <dialog
+        id="new-game-dialog"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+      >
+        <h2 id="dialog-title">Começar uma nova partida?</h2>
+        <p id="dialog-description">
+          O placar atual será descartado e você voltará à configuração.
+        </p>
+        <div class="dialog-actions">
+          <button
+            id="cancel-new-game"
+            class="button secondary"
+            type="button"
+            autofocus
+          >
+            Continuar jogando</button
+          ><button id="confirm-new-game" class="button primary" type="button">
+            Sim, nova partida
+          </button>
+        </div>
+      </dialog>
+      <footer class="page-footer">
+        <span>BOA COMPANHIA. BOA PARTIDA.</span
+        ><span class="footer-suits" aria-hidden="true"
+          >♠ <i>♥</i> ♣ <i>♦</i></span
+        ><span>Sem papel, sem perder a conta.</span>
+      </footer>
+    </div>
+  </body>
+</html>
